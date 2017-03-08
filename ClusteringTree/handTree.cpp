@@ -1,21 +1,11 @@
-/*  
-Trie tree
-    Used to perform alignment from botton to the top
-    between the child and the parent.
-    1- we need to discover the nodes of the tree
-    2- once we arrive to a leaf we have to go UP performing the op
-    3- from TOP to BOTTOM replace the alignment structure
-
-Date= 6/2/2017      version=0.03
-New type of tree more adecuated for our purpose
-*/
 #include <iostream>
-#include <iomanip>  //map setwd()
-#include <map>      //map
-#include <string>   //to_string
+//#include <iomanip>  //map setwd()
+//#include <map>      //map
+//#include <string>   //to_string
 #include <chrono>   //to measure the time
 #include <vector>	//vector
 #include <fstream>	//I/O file
+#include <algorithm>    // std::find
 
 using namespace std;
 using namespace chrono;
@@ -77,7 +67,8 @@ public:
     };
     void addNode(string sequence, int key);
     void addNode (string sequence, int key, Node* leaf);
-    Node* findNode(string sequence, Node* node);
+    //Node* findNode(string sequence, Node* node);
+    Node* findNode(int key, Node* node);
     void walk(Node* node);
     void printNode(Node* node);
 private:
@@ -93,22 +84,23 @@ Tree::~Tree() {
     freeNode(root);
 }
 // Free the node
-void Tree::freeNode(Node* leaf){
-    if ( leaf != NULL ) {
-		std::vector<Node*>::iterator iter, end;
-		for(iter = leaf->Child().begin(), end = leaf->Child().end() ; iter != end; ++iter) {
-			freeNode(*iter);
+void Tree::freeNode(Node* node){
+    if ( node != NULL ) {
+		for(int i=0; i<node->Child().size(); i++){
+			//cout<<node->Child()[i]->Sequence()<<endl;
+			freeNode(node->Child()[i]);
 		}
-        delete leaf;
+        delete node;
     }
 }
+
 void Tree::addNode(string sequence,int key){
     // No elements. Add the root
     if ( root == NULL ) {
-        cout<<"ADDED THE ROOT: "<<sequence<< " - "<<key<<" "<<sequence.length()<<endl;
+        //cout<<"ADDED THE ROOT: "<<sequence<< " - "<<key<<endl;
 	    Node* node = new Node();
 	    node->setKey(key);
-	    //node->setParent(NULL);
+	    node->setParent(NULL);
 	    node->setSequence(sequence);
 	    node->setLeaf(true);
 	    root = node;
@@ -119,7 +111,7 @@ void Tree::addNode(string sequence,int key){
 }
 //private metohd
 void Tree::addNode(string sequence, int key, Node* leaf){
-	cout<<"FIRST LAYER : "<<sequence<< " - "<<key<<" - "<<sequence.length()<<" PARENT: "<< leaf->Key()<<endl;
+	//cout<<"FIRST LAYER : "<<sequence<< " - "<<key<<" PARENT: "<< leaf->Key()<<endl;
 
 	//create the new node, it will be a leaf
 	Node* node = new Node();
@@ -141,7 +133,29 @@ void Tree::addNode(string sequence, int key, Node* leaf){
 void Tree::printVectorChild(Node* node){
 	cout<<"Sons of: "<<node->Key()<<endl;
 	for(int i=0; i<node->Child().size(); i++){
-		cout<<node->Child()[i]->Sequence()<<endl;
+		printNode(node->Child()[i]);
+		//cout<<node->Child()[i]->Sequence()<<endl;
+	}
+}
+
+/*Node* findNode(string sequence, Node* node){
+
+}*/
+Node* Tree::findNode(int key, Node* node){
+	//cout<<"Find Node: "<<key<<" - "<< node->Key()<<endl;
+	if(node->Key() == key){
+		return node;
+	}else {
+		//check if it's a child
+		for(int i=0; i<node->Child().size(); i++){
+			if(node->Child()[i]->Key()== key){
+				return node->Child()[i];
+			}
+			if(node->Child()[i]->Key() > key){ //nos lo hemos pasado
+				return findNode(key,node->Child()[i-1]);
+			}
+		}
+		return NULL;
 	}
 }
 // Print the tree
@@ -149,16 +163,16 @@ void Tree::walk(Node* node){
     if ( node ){
     	cout<<"***walk for: ";
     	printNode(node);
-
-        vector<Node*>::iterator iter, end;
 		for(int i=0; i<node->Child().size(); i++){
-			//cout<<node->Child()[i]->Sequence()<<endl;
 			walk(node->Child()[i]);
 		}
     }
 }
+
 void Tree::printNode(Node* node){
-	cout<<"Key: "<<node->Key()<<" - "<<node->Sequence()<<endl;
+	if(node->Parent()!=NULL){
+		cout<<"Key: "<<node->Key()<<" Parent: "<< node->Parent()->Key()<<" Sequence: "<<node->Sequence()<<endl;
+	}else{cout<<"Key: "<<node->Key()<<" Sequence: "<<node->Sequence()<<endl;} //ROOT node
 }
 
 int main() {
@@ -182,26 +196,36 @@ int main() {
 	tmp_index++;
 
 //insert the first N sequences in the first level
+	Node* node_tmp = new Node();
 	for( int i=1; i <= n; i++ ) {
 		tree->addNode(listSequence[tmp_index],tmp_index);
+		
+		node_tmp = tree->findNode(tmp_index, tree->Root()); //store the parent node for each iteration
+		//cout<<"print node tmp>> "<<tree->printNode(node_tmp);
 		tmp_index++;
-		//node_tmp= findNode(tmp_index, tree->Root()); //save the *Node durinf each iteration
+		
 //insert grouping by M elements
 		for( int j=1; j < m; j++ ) {	//is m-1 because it will be the parent+the m-1 child = m
-			//tree->addNode(listSequence[tmp_index],tmp_index, node_tmp);
+			tree->addNode(listSequence[tmp_index],tmp_index, node_tmp);
 			tmp_index++;
 	   	}
    	};
-
+//find node
+   	/*int valueToFind=16;
+   	cout<< "Find Node: "<<endl;
+   	if(tree->findNode(valueToFind,tree->Root())!=NULL){
+   		cout<<tree->findNode(valueToFind,tree->Root())->Sequence();
+   	}else{cout<<"Element: "<<valueToFind<<" Not found"<<endl;}
+   	cout<<endl;*/
 //Print tree
 	cout<< "Walk around the tree: "<<endl;
     tree->walk(tree->Root());
     cout << endl;
 
 //delete Tree
-    //segmentation fault
-    cout<< "Delete Tree: "<<endl;
-    //delete tree;
+    cout<< "Delete Tree: ...";
+    delete tree;
+    cout<<"Tree DELETED"<<endl;
 
     return 0;
 }

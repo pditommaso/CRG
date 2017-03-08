@@ -14,6 +14,8 @@ Performed to introduce the sequence as String
 #include <map>      //map
 #include <string>   //to_string
 #include <chrono>   //to measure the time
+#include <vector>   //vector
+#include <algorithm>    // std::sort
 
 using namespace std;
 using namespace chrono;
@@ -30,6 +32,7 @@ class Node {
     Node* left;
     Node* right;
     Node* parent;
+    bool leave;
 
 public:
     Node() { 
@@ -54,6 +57,9 @@ public:
     void setParent(Node* aParent) { 
         parent = aParent; 
     };
+    void setLeave(bool aLeave){
+        leave = aLeave;
+    }
     int Key() { 
         return key; 
     };
@@ -69,6 +75,9 @@ public:
     Node* Parent() { 
         return parent; 
     };
+    bool isLeave(){
+        return leave;
+    }
 };
 
 // Binary Search Tree class
@@ -82,20 +91,22 @@ public:
     };
     void addNode(int key, string sequence);
     Node* findNode(int key, Node* parent);
-    Node* findSequence(string sequence, Node* parent);
+    //Node* findSequence(string sequence, Node* parent);
     void walk(Node* node);
-    void findLeaves(Node* node);
-    void alignmentChildParent(Node* child);
-    void deleteNode(int key);
-    Node* min(Node* node);
-    Node* max(Node* node);
-    Node* successor(int key, Node* parent);
-    Node* predecessor(int key, Node* parent);
-    string operation2Nodes(Node* child, Node* parent);
-    //Node* getParent(int key, Node* parent);
+    vector<Node*> findLeaves(Node* node);
+    //void alignmentChildParent(Node* child);
+    //void deleteNode(int key);
+    //Node* min(Node* node);
+    //Node* max(Node* node);
+    //Node* successor(int key, Node* parent);
+    //Node* predecessor(int key, Node* parent);
+    vector<Node*> getGroupNodes(Node* node);
+    void findAllMSA(Node* node, vector<Node*> &vectorLeaves);
 private:
     void addNode(int key,string sequence, Node* leaf);
     void freeNode(Node* leaf);
+    Node* getNode(Node* node, int direction);
+    void removeLeaves(vector<Node*> msaLeaves, vector<Node*> &leaves);
 };
 
 // Map to store the operation btwn child&parent
@@ -128,6 +139,7 @@ void Tree::addNode(int key, string sequence){
         Node* n = new Node();
         n->setKey(key);
         n->setSequence(sequence);
+        n->setLeave(true);
         root = n;
     }
     else {
@@ -148,6 +160,8 @@ void Tree::addNode(int key, string sequence, Node* leaf) {
             n-> setSequence(sequence);
             n->setParent(leaf);
             leaf->setLeft(n);
+            n->setLeave(true);
+            leaf->setLeave(false);
         }
     }
     else{
@@ -160,6 +174,8 @@ void Tree::addNode(int key, string sequence, Node* leaf) {
             n-> setSequence(sequence);
             n->setParent(leaf);
             leaf->setRight(n);
+            n->setLeave(true);
+            leaf->setLeave(false);
         }
     }
 }
@@ -184,7 +200,7 @@ Node* Tree::findNode(int key, Node* node){
     }
 }
 
-Node* Tree::findSequence(string sequence, Node* node){
+/*Node* Tree::findSequence(string sequence, Node* node){
     if ( node == NULL ){
         return NULL;
     }
@@ -198,155 +214,169 @@ Node* Tree::findSequence(string sequence, Node* node){
     else{
         return NULL;
     }
-}
-// Find the Leaves
-void Tree::findLeaves(Node* node){
+}*/
+
+/*
+Public method
+The input is the "root" of the tree, and we will receive a vector<Node*> with all the leaves
+*/ 
+vector<Node*> Tree::findLeaves(Node* node){
+    vector <Node*> leaves;
+    vector <Node*> leavesLeft;
+    vector <Node*> leavesRight;
     if ( node ){
-        if (node->Left()==NULL && node->Right()==NULL){
-            cout<< "Node: "<< node->Key() <<" is a leaf."<<endl;
-            alignmentChildParent(node);
+        //if (node->Left()==NULL && node->Right()==NULL){
+        if (node->isLeave()){
+            //cout<< "Node: "<< node->Key() <<" is a leaf."<<endl;
+            leaves.push_back(node);
         }
-        findLeaves(node->Left());
-        findLeaves(node->Right());
+        //recursvity L/R
+        leavesLeft=findLeaves(node->Left());
+        leavesRight=findLeaves(node->Right());
+
+        //merged all the vectors
+        leaves.insert( leaves.end(), leavesLeft.begin(), leavesLeft.end() );
+        leaves.insert( leaves.end(), leavesRight.begin(), leavesRight.end() );
+
+        //TODO remove duplicates?? Tree dont have to have it.
     }
+    return leaves;
 }
-string operation2Nodes(Node* nodeChild, Node* nodeParent){
-    nodeChild->Sequence() +"-"+ nodeParent->Sequence();
-    string valor="";
-    return valor;
+/*
+Public method
+This function receive a node, and it will print out the set of nodes to perform the MSA
+*/
+vector<Node*> Tree::getGroupNodes(Node* node){
+    vector<Node*> nodesToMSA;
+    if (!node->isLeave() && 
+            node->Left()!=NULL && node->Right()!=NULL &&
+            !node->Left()->isLeave() && !node->Right()->isLeave()){
+        //vector<Node*> nodesToMSA;
+        nodesToMSA.push_back(node);                 //beginning node
+        nodesToMSA.push_back(getNode(node,0));      //LR
+        nodesToMSA.push_back(getNode(node,1));      //RR
+        nodesToMSA.push_back(getNode(node,2));      //LL
+
+        /*  //Print the vector
+        cout<< "NodesToMSA from key "<<node->Key()<<" - "<< node->Sequence()<<" size: "<<nodesToMSA.size()<<endl;
+        for(int i=0; i<nodesToMSA.size(); i++){
+           cout<<"Node: "<< nodesToMSA[i]->Key()<<" - "<<nodesToMSA[i]->Sequence()<<endl;
+        }*/
+    }else{
+        //cout<<"The node: "<<node->Key()<<" has not enough deep"<<endl;
+    }
+    return nodesToMSA;
+    //try to reach 2n nodes
+    //if this is not posible, the set will be only 3 nodes
+}
+
+/*
+Private method.
+The input is a node and an integer (direction). 
+And we will return another node situated in the direction indicated
+*/
+Node* Tree::getNode(Node* node, int direction){    //TODO use ENUM
+    switch ( direction ) {
+        case 0:
+            if (node->Left()!=NULL && node->Left()->Right()!=NULL){
+                return node->Left()->Right();
+            }
+            break;
+        case 1:
+            if (node->Right()->Right()!=NULL){
+                return node->Right()->Right();
+            }
+            break;
+        case 2:
+            if (node->Left()->Left()!=NULL){
+                return node->Left()->Left();
+            }
+            break;
+        }
+}
+/* 
+Private method 
+Used to sort a vector using the KEY value of the nodes
+*/
+bool sortVector (Node* i,Node* j) { return (i->Sequence()<j->Sequence()); }
+
+/*
+*/
+void Tree::findAllMSA(Node* node, vector<Node*> &leavesVector){
+cout<<"**********************node-KEY "<<node->Key()<<endl;
+    vector <Node*> mSAVector;
+    if (!leavesVector.empty()){             //we still have leaves
+        mSAVector=getGroupNodes(node);
+        if(!mSAVector.empty()) {            //we have more deep
+            cout<< "mSAVector from key "<<node->Key()<<endl<<"*** ";
+            for(int i=0; i<mSAVector.size(); i++){
+                cout/*<<" >> Node: "<< mSAVector[i]->Key()<<" - "*/<<mSAVector[i]->Sequence()<<endl;
+            }cout<<endl;
+            
+            //perform the MSA alignment
+
+            //delete from LeavesVector
+            removeLeaves(mSAVector,leavesVector);
+
+            //recursivity L/R
+            findAllMSA(node->Left(),leavesVector);
+            findAllMSA(node->Right(),leavesVector);
+        }
+
+    }/*else{}*/
+    if(!leavesVector.empty()){
+        /*cout<<"Leaves Remaining: ";
+        for(int i=0; i<leavesVector.size(); i++){
+            cout<<leavesVector[i]->Key()<<" - ";
+        }cout<<endl;*/
+    }else{cout<<"Finished with EXIT :)"<<endl;}
+}
+/*
+Private method
+Receive by REFERENCE 2 vectors, and will substract the common elements to the leavesVector
+*/
+void Tree::removeLeaves(vector<Node*> mSAVector, vector<Node*> &leavesVector){
+        //inverse deletion to be able to do "raw" on the vector
+        //http://stackoverflow.com/questions/8628951/remove-elements-of-a-vector-inside-the-loop
+        sort (mSAVector.begin(), mSAVector.end(), sortVector);
+        sort (leavesVector.begin(), leavesVector.end(), sortVector);
+        for(int i=0; i<mSAVector.size(); i++){
+            if(!leavesVector.empty()) {
+                for(int j = leavesVector.size() - 1; j >= 0; j--) {
+                    if(leavesVector.at(j)->Sequence() == mSAVector[i]->Sequence()) {
+                        leavesVector.erase( leavesVector.begin() + j ); 
+                    }
+                }
+            }
+        }
+        /*cout<<endl<< "------Remaining AFTER delete: "<<endl;
+        for(int i=0; i<leavesVector.size(); i++){
+            cout<<"Node: "<< leavesVector[i]->Key()<<" - "<<leavesVector[i]->Sequence()<<endl;
+        }*/
 }
 // Perform operation between CHILD and PARENT
-void Tree::alignmentChildParent(Node* child){
+/*void Tree::alignmentChildParent(Node* child){
     if(child->Parent()){
         string keyResult;
         keyResult = to_string(child->Key()) +"-"+ to_string(child->Parent()->Key());
         if(!alignments_Map.count(keyResult)){
-            cout<<"child "<<child<<" parent: "<<child->Parent()<<endl;
-            operation2Nodes(child, child);
+            cout<<"child "<<child->Key()<<" parent: "<<child->Parent()->Key()<<endl;
+            //operation2Nodes(child, child);
             string operation="";
             //child->Sequence() +"-"+ child->Parent()->Sequence();
             alignments_Map[keyResult] = operation;
-            cout<<"*** child-parent: "<<child->Key()<<" - "<<child->Parent()->Key()<<" Sum of Sequences: " << operation <<endl;
+            //cout<<"*** child-parent: "<<child->Key()<<" - "<<child->Parent()->Key()<<" Sum of Sequences: " << operation <<endl;
             alignmentChildParent(child->Parent());
         }
     }
-}
+}*/
 
 // Print the tree
 void Tree::walk(Node* node){
     if ( node ){
-        cout << node->Key() << " ";
+        cout << node->Key() << " - "<<node->Sequence()<<" -"<<node->isLeave()<<endl;
         walk(node->Left());
         walk(node->Right());
-    }
-}
-
-// Find the node with min key
-// Traverse the left sub-tree recursively
-// till left sub-tree is empty to get min
-Node* Tree::min(Node* node){
-    if ( node == NULL ){
-        return NULL;
-    }
-    if ( node->Left() ){
-        min(node->Left());
-    }
-    else{
-        return node;
-    }
-}
-
-// Find the node with max key
-// Traverse the right sub-tree recursively
-// till right sub-tree is empty to get max
-Node* Tree::max(Node* node){
-    if ( node == NULL ){
-        return NULL;
-    }
-    if ( node->Right() ){
-        max(node->Right());
-    }
-    else{
-        return node;
-    }
-}
-
-//Find successor to a node
-//Find the node, get the node with max value
-//for the right sub-tree to get the successor
-Node* Tree::successor(int key, Node *node){
-    Node* thisKey = findNode(key, node);
-    if ( thisKey ){
-        return max(thisKey->Right());
-    }
-}
-
-//Find predecessor to a node
-//Find the node, get the node with max value
-//for the left sub-tree to get the predecessor
-Node* Tree::predecessor(int key, Node *node){
-    Node* thisKey = findNode(key, node);
-    if ( thisKey ){
-        return max(thisKey->Left());
-    }
-}
-
-// Delete a node
-// (1) If leaf just delete
-// (2) If only one child delete this node and replace
-// with the child
-// (3) If 2 children. Find the predecessor (or successor).
-// Delete the predecessor (or successor). Replace the
-// node to be deleted with the predecessor (or successor).
-void Tree::deleteNode(int key){
-    // Find the node.
-    Node* thisKey = findNode(key, root);
-
-    // (1)
-    if ( thisKey->Left() == NULL && thisKey->Right() == NULL ){
-        if ( thisKey->Key() > thisKey->Parent()->Key() ){
-            thisKey->Parent()->setRight(NULL);
-        }
-        else{
-            thisKey->Parent()->setLeft(NULL);
-        }
-        delete thisKey;
-    }
-
-    // (2)
-    if ( thisKey->Left() == NULL && thisKey->Right() != NULL ){
-        if ( thisKey->Key() > thisKey->Parent()->Key() ){
-            thisKey->Parent()->setRight(thisKey->Right());
-        }
-        else{
-            thisKey->Parent()->setLeft(thisKey->Right());
-        }
-        delete thisKey;
-    }
-    if ( thisKey->Left() != NULL && thisKey->Right() == NULL ){
-        if ( thisKey->Key() > thisKey->Parent()->Key() ){
-            thisKey->Parent()->setRight(thisKey->Left());
-        }
-        else{
-            thisKey->Parent()->setLeft(thisKey->Left());
-        }
-        delete thisKey;
-    }
-
-    // (3)
-    if ( thisKey->Left() != NULL && thisKey->Right() != NULL ){
-        Node* sub = predecessor(thisKey->Key(), thisKey);
-        if ( sub == NULL ){
-            sub = successor(thisKey->Key(), thisKey);        
-        }
-        if ( sub->Parent()->Key() <= sub->Key() ){
-            sub->Parent()->setRight(sub->Right());
-        }
-        else{
-            sub->Parent()->setLeft(sub->Left());
-        }
-        thisKey->setKey(sub->Key());
-        delete sub;
     }
 }
 
@@ -366,33 +396,49 @@ int main() {
     Tree* tree = new Tree();
 
     // Add nodes
-    tree->addNode(6,"AAATA6");
-    tree->addNode(3,"AAATA3");
-    tree->addNode(2,"AAATA2");
-    tree->addNode(5,"AAATA5");
-    tree->addNode(9,"AAATA9");
-    tree->addNode(7,"AAATA7");
-    tree->addNode(11,"AAATA11");
+           tree->addNode(8,"Seq_07");
 
+    tree->addNode(4,"Seq_03");
+    tree->addNode(12,"Seq_07");
+
+    tree->addNode(2,"Seq_02");
+    tree->addNode(6,"Seq_03");
+    tree->addNode(10,"Seq_05");
+    tree->addNode(14,"Seq_07");
+
+    tree->addNode(1,"Seq_01");
+    tree->addNode(3,"Seq_02");
+    tree->addNode(5,"Seq_03");
+    tree->addNode(7,"Seq_04");
+    tree->addNode(9,"Seq_05");
+    tree->addNode(11,"Seq_06");
+    tree->addNode(13,"Seq_07");
+    tree->addNode(15,"Seq_08");
     // Traverse the tree
-    cout<< "Walk around the tree: ";
+    /*
+    cout<< "Walk around the tree: "<<endl;
     tree->walk(tree->Root());
     cout << endl;
+    */
+
 
     // Find Leaves & sum pairs
-    cout<< "***Find the leaves*** "<<endl;
+    //cout<< "***Find the leaves*** "<<endl;
     high_resolution_clock::time_point timeLeaveIni = high_resolution_clock::now();
-    
-    tree->findLeaves(tree->Root());
-    
+
+    vector<Node*> resultLeaves = tree->findLeaves(tree->Root());
+
     high_resolution_clock::time_point timeLeaveEnd = high_resolution_clock::now();
     auto timeLeave=duration_cast<microseconds>( timeLeaveEnd - timeLeaveIni).count();
 
-    //print the sum of pairs
-    printMap(alignments_Map);
+    cout<<"Leaves: ";
+    for(int i=0; i<resultLeaves.size(); i++){
+        cout<<resultLeaves[i]->Key()<<" - ";
+    }cout<<endl;
 
     cout <<"Time for findLeave (microSec): "<< timeLeave <<endl;
-    //step3-- From TOP to BOTTOMM
+    
+    tree->findAllMSA(tree->Root(),resultLeaves);
 
 
     //delete & clean elements
