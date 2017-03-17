@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/edgano/CRG/randomBucket/src/randomBucket.cpp
+iostream
+-
+map
+-
+iomanip
+-
+string
+-
+fstream
+-
+stdlib.h
+-
+time.h
+-
+vector
+-
+algorithm
+-
+

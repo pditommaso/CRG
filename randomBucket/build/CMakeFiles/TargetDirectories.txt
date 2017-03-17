@@ -1,0 +1,3 @@
+/home/edgano/CRG/randomBucket/build/CMakeFiles/edit_cache.dir
+/home/edgano/CRG/randomBucket/build/CMakeFiles/rebuild_cache.dir
+/home/edgano/CRG/randomBucket/build/CMakeFiles/randomBucket.dir
