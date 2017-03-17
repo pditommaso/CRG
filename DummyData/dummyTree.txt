@@ -1,0 +1,113 @@
+//4 level tree    
+    tree->addNode(8,"Seq_07");
+
+    tree->addNode(4,"Seq_03");
+    tree->addNode(12,"Seq_07");
+
+    tree->addNode(2,"Seq_02");
+    tree->addNode(6,"Seq_03");
+    tree->addNode(10,"Seq_05");
+    tree->addNode(14,"Seq_07");
+
+    tree->addNode(1,"Seq_01");
+    tree->addNode(3,"Seq_02");
+    tree->addNode(5,"Seq_03");
+    tree->addNode(7,"Seq_04");
+    tree->addNode(9,"Seq_05");
+    tree->addNode(11,"Seq_06");
+    tree->addNode(13,"Seq_07");
+    tree->addNode(15,"Seq_08");
+
+//5 level tree    
+    tree->addNode(16,"Seq_07");
+
+    tree->addNode(8,"Seq_07");
+    tree->addNode(24,"Seq_10");
+
+    tree->addNode(4,"Seq_03");
+    tree->addNode(12,"Seq_07");
+    tree->addNode(20,"Seq_10");
+    tree->addNode(28,"Seq_13");
+
+    tree->addNode(2,"Seq_02");
+    tree->addNode(6,"Seq_03");
+    tree->addNode(10,"Seq_05");
+    tree->addNode(14,"Seq_07");
+    tree->addNode(18,"Seq_10");
+    tree->addNode(22,"Seq_12");
+    tree->addNode(26,"Seq_13");
+    tree->addNode(30,"Seq_15");
+
+    tree->addNode(1,"Seq_01");
+    tree->addNode(3,"Seq_02");
+    tree->addNode(5,"Seq_03");
+    tree->addNode(7,"Seq_04");
+    tree->addNode(9,"Seq_05");
+    tree->addNode(11,"Seq_06");
+    tree->addNode(13,"Seq_07");
+    tree->addNode(15,"Seq_08");
+    tree->addNode(17,"Seq_09");
+    tree->addNode(19,"Seq_10");
+    tree->addNode(21,"Seq_11");
+    tree->addNode(23,"Seq_12");
+    tree->addNode(25,"Seq_13");
+    tree->addNode(27,"Seq_14");
+    tree->addNode(29,"Seq_15");
+    tree->addNode(31,"Seq_16");
+
+    //dummy tree
+    tree->addRoot(0,"Seq_07");
+
+    tree->addNode(1,"Seq_03",tree->Root(),left_t);
+    tree->addNode(2,"Seq_07",tree->Root(),right_t);
+
+    tree->addNode(3,"Seq_02",tree->Root()->Left(),left_t);
+    tree->addNode(4,"Seq_03",tree->Root()->Left(),right_t);
+    tree->addNode(5,"Seq_05",tree->Root()->Right(),left_t);
+    tree->addNode(6,"Seq_07",tree->Root()->Right(),right_t);
+
+    tree->addNode(7,"Seq_01",tree->Root()->Left()->Left(),left_t);
+    tree->addNode(8,"Seq_02",tree->Root()->Left()->Left(),right_t);
+    tree->addNode(9,"Seq_03",tree->Root()->Left()->Right(),left_t);
+    tree->addNode(10,"Seq_04",tree->Root()->Left()->Right(),right_t);
+    tree->addNode(11,"Seq_05",tree->Root()->Right()->Left(),left_t);
+    tree->addNode(12,"Seq_06",tree->Root()->Right()->Left(),right_t);
+    tree->addNode(13,"Seq_07",tree->Root()->Right()->Right(),left_t);
+    tree->addNode(14,"Seq_08",tree->Root()->Right()->Right(),right_t);
+
+//dummyTree
+    tree->addRoot(16,"Seq_07");
+
+    tree->addNode(8,"Seq_07",tree->Root(),left_t);
+    tree->addNode(24,"Seq_10",tree->Root(),right_t);
+
+    tree->addNode(4,"Seq_03",tree->Root()->Left(),left_t);
+    tree->addNode(12,"Seq_07",tree->Root()->Left(),right_t);
+    tree->addNode(20,"Seq_10",tree->Root()->Right(),left_t);
+    tree->addNode(28,"Seq_13",tree->Root()->Right(),right_t);
+
+    tree->addNode(2,"Seq_02",tree->Root()->Left()->Left(),left_t);
+    tree->addNode(6,"Seq_03",tree->Root()->Left()->Left(),right_t);
+    tree->addNode(10,"Seq_05",tree->Root()->Left()->Right(),left_t);
+    tree->addNode(14,"Seq_07",tree->Root()->Left()->Right(),right_t);
+    tree->addNode(18,"Seq_10",tree->Root()->Right()->Left(),left_t);
+    tree->addNode(22,"Seq_12",tree->Root()->Right()->Left(),right_t);
+    tree->addNode(26,"Seq_13",tree->Root()->Right()->Right(),left_t);
+    tree->addNode(30,"Seq_15",tree->Root()->Right()->Right(),right_t);
+
+    tree->addNode(1,"Seq_01",tree->Root()->Left()->Left()->Left(),left_t);
+    tree->addNode(3,"Seq_02",tree->Root()->Left()->Left()->Left(),right_t);
+    tree->addNode(5,"Seq_03",tree->Root()->Left()->Left()->Right(),left_t);
+    tree->addNode(7,"Seq_04",tree->Root()->Left()->Left()->Right(),right_t);
+    tree->addNode(9,"Seq_05",tree->Root()->Left()->Right()->Left(),left_t);
+    tree->addNode(11,"Seq_06",tree->Root()->Left()->Right()->Left(),right_t);
+    tree->addNode(13,"Seq_07",tree->Root()->Left()->Right()->Right(),left_t);
+    tree->addNode(15,"Seq_08",tree->Root()->Left()->Right()->Right(),right_t);
+    tree->addNode(17,"Seq_09",tree->Root()->Right()->Left()->Left(),left_t);
+    tree->addNode(19,"Seq_10",tree->Root()->Right()->Left()->Left(),right_t);
+    tree->addNode(21,"Seq_11",tree->Root()->Right()->Left()->Right(),left_t);
+    tree->addNode(23,"Seq_12",tree->Root()->Right()->Left()->Right(),right_t);
+    tree->addNode(25,"Seq_13",tree->Root()->Right()->Right()->Left(),left_t);
+    tree->addNode(27,"Seq_14",tree->Root()->Right()->Right()->Left(),right_t);
+    tree->addNode(29,"Seq_15",tree->Root()->Right()->Right()->Right(),left_t);
+    tree->addNode(31,"Seq_16",tree->Root()->Right()->Right()->Right(),right_t);
