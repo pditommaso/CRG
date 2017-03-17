@@ -1,0 +1,17 @@
+//Weekly report 01		3/01 - 3/08
+
+The first day we had a meeting with a small introduction. How thinks goes at CRG and PRBB. We had a small speechs from IT guys and Health and Secure lady.
+On Thursday we had a group meeting, where we introduce ourself and a member of the group did a presentation about what was she doing. We talked about convenience of CWL parser and the relation of NextFlow and Galaxy.
+During the week we work trying to implement a tree and the operations to go across it in the way we want.
+We tried with 2 different sets. (depth 4 & 5). where we had some problems at the time to define the functionality and how the algorithm will work during the limit cases.
+
+//Weekly report 02		3/09 - 3/16
+
+We start the week with the same problems of the end of the first week. We still need a meeting all together and not just explain a dummy example.
+It's hard to code when you only have 2 examples and you don't see how the follow a pattern. 
+Finally we realized that it was 2 different algorithms to get the output we expected.
+At the end we just go one step back and start trying to do a random bucket program.
+PhD week. Not as many hours as expected in the project
+
+//Weekly report 03		3/16 -	3/23
+We already have perform the software. We start fighting with clustalO to integrate it inside our cpp code.
