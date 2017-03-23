@@ -16,7 +16,7 @@ struct sequence_t {
 } ;
 
 void printSequence(sequence_t sequence){
-	cout<<sequence.seqName<</*" - "<<sequence.seqString<<*/endl;
+	cout<<sequence.seqName<<endl<<sequence.seqString<<endl;
 }
 
 void printVector(vector <sequence_t> sequenceVector){

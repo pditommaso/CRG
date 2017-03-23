@@ -1,0 +1,3 @@
+/home/edgano/CRG/ClustalOexample/build/CMakeFiles/edit_cache.dir
+/home/edgano/CRG/ClustalOexample/build/CMakeFiles/rebuild_cache.dir
+/home/edgano/CRG/ClustalOexample/build/CMakeFiles/clustalO.dir
