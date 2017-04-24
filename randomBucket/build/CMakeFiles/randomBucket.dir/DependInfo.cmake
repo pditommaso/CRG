@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/edgano/CRG/randomBucket/src/randomBucket.cpp" "/home/edgano/CRG/randomBucket/build/CMakeFiles/randomBucket.dir/src/randomBucket.cpp.o"
+  "/home/edgano/Git/randomBucket/src/randomBucket.cpp" "/home/edgano/Git/randomBucket/build/CMakeFiles/randomBucket.dir/src/randomBucket.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/edgano/CRG/randomBucket/src/randomBucket.cpp
+/home/edgano/Git/randomBucket/src/randomBucket.cpp
 iostream
 -
 map

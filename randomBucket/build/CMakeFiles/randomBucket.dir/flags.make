@@ -6,5 +6,5 @@ CXX_FLAGS =
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/edgano/CRG/randomBucket/include 
+CXX_INCLUDES = -I/home/edgano/Git/randomBucket/include 
 

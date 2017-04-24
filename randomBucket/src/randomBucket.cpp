@@ -16,7 +16,7 @@ struct sequence_t {
 } ;
 
 void printSequence(sequence_t sequence){
-	cout<<sequence.seqName<</*" - "<<sequence.seqString<<*/endl;
+	cout<<sequence.seqName<<endl<<sequence.seqString<<endl;
 }
 
 void printVector(vector <sequence_t> sequenceVector){
@@ -144,8 +144,9 @@ int main() {
 	finalResult[0]=aux;
 	cout<<"First Nodes: "<<endl;
 	printVector(result);
-
+	
 	auxDosVector = fillTheBucket(bucketSize-1, sequenceList, result);
+	
 	finalResult=recursivity(bucketSize, sequenceList, result, auxDosVector);
 
 	cout<<"END: "<<sequenceList.size()<<endl;

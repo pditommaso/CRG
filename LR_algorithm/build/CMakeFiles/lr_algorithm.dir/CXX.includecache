@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/edgano/Git/LR_algorithm/src/lr_algorithm.cpp
+iostream
+-
+iomanip
+-
+map
+-
+string
+-
+fstream
+-
+chrono
+-
+vector
+-
+algorithm
+-
+
