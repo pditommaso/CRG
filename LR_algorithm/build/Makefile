@@ -48,10 +48,17 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
+<<<<<<< HEAD
 CMAKE_SOURCE_DIR = /home/edgano/Git/LR_algorithm
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = /home/edgano/Git/LR_algorithm/build
+=======
+CMAKE_SOURCE_DIR = /home/edgano/CRG/LR_algorithm
+
+# The top-level build directory on which CMake was run.
+CMAKE_BINARY_DIR = /home/edgano/CRG/LR_algorithm/build
+>>>>>>> origin/master
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +87,15 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
+<<<<<<< HEAD
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/edgano/Git/LR_algorithm/build/CMakeFiles /home/edgano/Git/LR_algorithm/build/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/edgano/Git/LR_algorithm/build/CMakeFiles 0
+=======
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/edgano/CRG/LR_algorithm/build/CMakeFiles /home/edgano/CRG/LR_algorithm/build/CMakeFiles/progress.marks
+	$(MAKE) -f CMakeFiles/Makefile2 all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/edgano/CRG/LR_algorithm/build/CMakeFiles 0
+>>>>>>> origin/master
 .PHONY : all
 
 # The main clean target

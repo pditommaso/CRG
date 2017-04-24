@@ -6,5 +6,9 @@ CXX_FLAGS =  -std=c++11
 
 CXX_DEFINES = 
 
+<<<<<<< HEAD
 CXX_INCLUDES = -I/home/edgano/Git/LR_algorithm/include 
+=======
+CXX_INCLUDES = -I/home/edgano/CRG/LR_algorithm/include 
+>>>>>>> origin/master
 

@@ -117,7 +117,11 @@ private:
     void removeLeaves(vector<Node*> msaLeaves, vector<Node*> &leaves);
     void printVector(vector<Node*> vector);
     void printNode(Node* node);
+<<<<<<< HEAD
     vector<Node*> getNextLevel(vector<Node*> parentsList/*,vector<Node*> &nodesToMSA*/ );
+=======
+    vector<Node*> getNextLevel(vector<Node*> parentsList,vector<Node*> &nodesToMSA );
+>>>>>>> origin/master
 };
 
 // Constructor
@@ -212,16 +216,28 @@ vector<Node*> Tree::findLeaves(Node* node){
     return leaves;
 }
 
+<<<<<<< HEAD
 vector<Node*> Tree::getNextLevel(vector<Node*> parentsList/*,vector<Node*> &nodesToMSA*/ ){
 	vector<Node*> parentsVector;
 	for (auto &parent : parentsList){
 		/*nodesToMSA.push_back(getNode(parent,left_t));
 		nodesToMSA.push_back(getNode(parent,right_t));*/
+=======
+vector<Node*> Tree::getNextLevel(vector<Node*> parentsList,vector<Node*> &nodesToMSA ){
+	vector<Node*> parentsVector;
+	for (auto &parent : parentsList){
+		nodesToMSA.push_back(getNode(parent,left_t));
+		nodesToMSA.push_back(getNode(parent,right_t));
+>>>>>>> origin/master
 
 		parentsVector.push_back(getNode(parent,left_t));
 		parentsVector.push_back(getNode(parent,right_t));		
 	}
+<<<<<<< HEAD
 	cout<<"getNextLevel vector"<<endl;
+=======
+	cout<<"parentVector Inside"<<endl;
+>>>>>>> origin/master
 	printVector(parentsVector);
 	return parentsVector;
 }
@@ -229,6 +245,7 @@ vector<Node*> Tree::getNextLevel(vector<Node*> parentsList/*,vector<Node*> &node
 Public method
 This function receive a node, and it will print out the set of nodes to perform the MSA
 */
+<<<<<<< HEAD
 vector<Node*> Tree::getGroupNodes(Node* node, int bucketSize ){
     vector<Node*> bucketVector;
     vector<Node*> sonsBucket;
@@ -263,12 +280,17 @@ vector<Node*> Tree::getGroupNodes(Node* node, int bucketSize ){
 
 
 	/*cout<< "bucketSize: "<<bucketSize<<" node: "<<node->SequenceID()<<endl;
+=======
+vector<Node*> Tree::getGroupNodes(Node* node, int bucketSize){
+	cout<< "bucketSize: "<<bucketSize<<" node: "<<node->SequenceID()<<endl;
+>>>>>>> origin/master
 	vector<Node*> parents;
     vector<Node*> nodesToMSA;
 
 
     nodesToMSA.push_back(node);
     parents.push_back(node);
+<<<<<<< HEAD
 
     cout<<"getGroup"<<endl;
     printVector(parents);
@@ -276,6 +298,18 @@ vector<Node*> Tree::getGroupNodes(Node* node, int bucketSize ){
     parents=getNextLevel(parents, nodesToMSA);
     getNextLevel(parents, nodesToMSA);
     cout<<"****"<<endl;*/
+=======
+    while (nodesToMSA.size() < bucketSize){
+    	cout<<"WHILE LOOP:"<<endl;
+    	printVector(parents);
+    	parents=getNextLevel(parents, nodesToMSA);
+    	getNextLevel(parents, nodesToMSA);
+    	cout<<"***"<<endl;
+
+    }
+
+
+>>>>>>> origin/master
 
     /*nodesToMSA.push_back(node);
     if (!node->isLeave()&& nodesToMSA.size() < bucketSize){
@@ -299,7 +333,11 @@ vector<Node*> Tree::getGroupNodes(Node* node, int bucketSize ){
         getGroupNodes(nodesToMSA,bucketSize);
         
     }*/
+<<<<<<< HEAD
     //return nodesToMSA;
+=======
+    return nodesToMSA;
+>>>>>>> origin/master
 }
 /*
                 process (Node X)
@@ -339,10 +377,15 @@ bool sortVector (Node* i,Node* j) { return (i->Sequence()<j->Sequence()); }
 void Tree::findAllMSA(Node* node, vector<Node*> &leavesVector, int bucketSize){
 //cout<<"**********************node-KEY "<<node->SequenceID()<<endl;
     vector <Node*> mSAVector;
+<<<<<<< HEAD
 
     if (!leavesVector.empty()){             //we still have leaves
         mSAVector=getGroupNodes(node, bucketSize);
 
+=======
+    if (!leavesVector.empty()){             //we still have leaves
+        mSAVector=getGroupNodes(node, bucketSize);
+>>>>>>> origin/master
         if(!mSAVector.empty()) {            //we have more deep
             /*cout<< "MSA Bucket from node "<<node->Sequence()<<" ("<<node->SequenceID()<<")"<<endl;
             printVector(mSAVector);
@@ -451,7 +494,11 @@ int main() {
     tree->addNode(13,"Seq_13",tree->Root()->Right()->Right(),left_t);
     tree->addNode(14,"Seq_15",tree->Root()->Right()->Right(),right_t);
 
+<<<<<<< HEAD
     /*tree->addNode(16,"Seq_01",tree->Root()->Left()->Left()->Left(),left_t);
+=======
+    tree->addNode(16,"Seq_01",tree->Root()->Left()->Left()->Left(),left_t);
+>>>>>>> origin/master
     tree->addNode(17,"Seq_02",tree->Root()->Left()->Left()->Left(),right_t);
     tree->addNode(18,"Seq_03",tree->Root()->Left()->Left()->Right(),left_t);
     tree->addNode(19,"Seq_04",tree->Root()->Left()->Left()->Right(),right_t);
@@ -466,7 +513,11 @@ int main() {
     tree->addNode(28,"Seq_13",tree->Root()->Right()->Right()->Left(),left_t);
     tree->addNode(29,"Seq_14",tree->Root()->Right()->Right()->Left(),right_t);
     tree->addNode(30,"Seq_15",tree->Root()->Right()->Right()->Right(),left_t);
+<<<<<<< HEAD
     tree->addNode(31,"Seq_16",tree->Root()->Right()->Right()->Right(),right_t);*/
+=======
+    tree->addNode(31,"Seq_16",tree->Root()->Right()->Right()->Right(),right_t);
+>>>>>>> origin/master
 
     // Traverse the tree
     /*cout<< "Walk around the tree: "<<endl;

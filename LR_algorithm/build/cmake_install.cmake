@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # Install script for directory: /home/edgano/Git/LR_algorithm
+=======
+# Install script for directory: /home/edgano/CRG/LR_algorithm
+>>>>>>> origin/master
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,5 +44,9 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
+<<<<<<< HEAD
 file(WRITE "/home/edgano/Git/LR_algorithm/build/${CMAKE_INSTALL_MANIFEST}"
+=======
+file(WRITE "/home/edgano/CRG/LR_algorithm/build/${CMAKE_INSTALL_MANIFEST}"
+>>>>>>> origin/master
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

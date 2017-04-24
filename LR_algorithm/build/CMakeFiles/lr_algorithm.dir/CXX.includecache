@@ -6,7 +6,11 @@
 
 #IncludeRegexTransform: 
 
+<<<<<<< HEAD
 /home/edgano/Git/LR_algorithm/src/lr_algorithm.cpp
+=======
+/home/edgano/CRG/LR_algorithm/src/lr_algorithm.cpp
+>>>>>>> origin/master
 iostream
 -
 iomanip

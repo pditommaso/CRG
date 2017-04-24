@@ -4,7 +4,11 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+<<<<<<< HEAD
   "/home/edgano/Git/LR_algorithm/src/lr_algorithm.cpp" "/home/edgano/Git/LR_algorithm/build/CMakeFiles/lr_algorithm.dir/src/lr_algorithm.cpp.o"
+=======
+  "/home/edgano/CRG/LR_algorithm/src/lr_algorithm.cpp" "/home/edgano/CRG/LR_algorithm/build/CMakeFiles/lr_algorithm.dir/src/lr_algorithm.cpp.o"
+>>>>>>> origin/master
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

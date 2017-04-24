@@ -1,3 +1,9 @@
+<<<<<<< HEAD
 /home/edgano/Git/LR_algorithm/build/CMakeFiles/edit_cache.dir
 /home/edgano/Git/LR_algorithm/build/CMakeFiles/rebuild_cache.dir
 /home/edgano/Git/LR_algorithm/build/CMakeFiles/lr_algorithm.dir
+=======
+/home/edgano/CRG/LR_algorithm/build/CMakeFiles/edit_cache.dir
+/home/edgano/CRG/LR_algorithm/build/CMakeFiles/rebuild_cache.dir
+/home/edgano/CRG/LR_algorithm/build/CMakeFiles/lr_algorithm.dir
+>>>>>>> origin/master
