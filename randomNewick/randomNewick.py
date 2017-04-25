@@ -13,8 +13,8 @@ import copy								#deep copy
 
 
 arg1 = sys.argv[1]						#console input
-arg = re.sub('\.nwk$', '', arg1)		#remove extension
-argOut = arg+"-out.nwk"					#add output format
+arg = re.sub('\.dnd$', '', arg1)		#remove extension
+argOut = arg+"-random_out.dnd"					#add output format
 
 tree = Phylo.read(arg1, 'newick')
 treeResult = copy.deepcopy(tree)		#deep copy of the tree
