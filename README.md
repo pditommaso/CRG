@@ -1,6 +1,11 @@
 # CRG
-<<<<<<< HEAD
+
 Master internship @ CRG
 =======
 Projects for the intern of the MSc in Bioinformatics
->>>>>>> origin/master
+
+conect to ANT cluster server
+ssh egarriga@ant-login.linux.crg.es
+
+conect to nextflow server
+ssh egarriga@nextflow.linux.crg.es
