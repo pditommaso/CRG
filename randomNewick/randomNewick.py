@@ -14,15 +14,13 @@ import os								#file
 
 '''	to read from a tree file by line arg
 arg1 = sys.argv[1]						#console input
-<<<<<<< HEAD
 arg = re.sub('\.tree$', '', arg1)		#remove extension
 argOut = arg+"_randome_out.tree"		#add output format
 '''
 files = [f for f in os.listdir('.') if (f.endswith('.tree') and not f.endswith('_random.tree'))]
-=======
+
 arg = re.sub('\.dnd$', '', arg1)		#remove extension
-argOut = arg+"-random_out.dnd"					#add output format
->>>>>>> origin/master
+argOut = arg+"-random_out.dnd"			#add output format
 
 for arg1 in files:
 	arg = re.sub('.tree', '', arg1)		#remove extension
