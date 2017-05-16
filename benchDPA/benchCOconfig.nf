@@ -56,7 +56,7 @@ bucs.combine(results)
   set id, buc, file('aln.fa') into alignments
 
   """
-  t_coffee -dpa -dpa_method ${params.msa_method} -dpa_tree $tree -seq $fasta -outfile aln.fa  -dpa_nseq $buc -dpa_thread 8 -multicore no
+  t_coffee -dpa -dpa_method ${params.msa_method} -dpa_tree $tree -seq $fasta -outfile aln.fa  -dpa_nseq $buc -dpa_thread $task.cpus
   """
 
 }
